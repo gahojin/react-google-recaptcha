@@ -1,0 +1,35 @@
+import { useGoogleRecaptcha } from '@gahojin-inc/react-google-recaptcha'
+import { useCallback, useState } from 'react'
+
+const Example = () => {
+  const { isLoading, execute } = useGoogleRecaptcha()
+  const [token, setToken] = useState<string>()
+  const [action, setAction] = useState<string>()
+
+  const changeAction = useCallback((text: string) => {
+    setAction(text)
+  }, [])
+
+  const clickVerify = useCallback(async () => {
+    setToken(await execute(action))
+  }, [action, execute])
+
+  return (
+    <div>
+      {isLoading ? (
+        'loading...'
+      ) : (
+        <>
+          <input type="text" onChange={(e) => changeAction(e.target.value)} value={action} />
+          <button type="button" onClick={clickVerify}>
+            Verify
+          </button>
+          <hr />
+          {token && <p style={{ fontSize: 'small' }}>{token}</p>}
+        </>
+      )}
+    </div>
+  )
+}
+
+export default Example

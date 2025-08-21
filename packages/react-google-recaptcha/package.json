@@ -1,0 +1,53 @@
+{
+  "name": "@gahojin-inc/react-google-recaptcha",
+  "version": "2025.8.0",
+  "description": "Hooks for Google ReCaptcha V3",
+  "author": "GAHOJIN, Inc.",
+  "license": "Apache-2.0",
+  "sideEffects": false,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gahojin/react-google-recaptcha.git",
+    "directory": "packages/react-google-recaptcha"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.test.*"
+  ],
+  "keywords": [
+    "google-recaptcha",
+    "react"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "scripts": {
+    "clean": "rimraf dist .turbo *.log",
+    "prebuild": "rimraf dist",
+    "build": "rolldown -c",
+    "prepublish": "pnpm run build",
+    "lint": "biome check --write src",
+    "check": "tsc --noEmit",
+    "check:packagejson": "attw --pack --profile esm-only .",
+    "test": "vitest --watch",
+    "test:unit": "vitest --passWithNoTests --run --coverage"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "react": "19.1.1"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19"
+  }
+}
