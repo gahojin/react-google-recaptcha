@@ -2,7 +2,7 @@ import { useGoogleRecaptcha } from '@gahojin-inc/react-google-recaptcha'
 import { useCallback, useState } from 'react'
 
 const Example = () => {
-  const { isLoading, execute } = useGoogleRecaptcha()
+  const { isLoading, execute, reset: clickReset } = useGoogleRecaptcha()
   const [token, setToken] = useState<string>()
   const [action, setAction] = useState<string>()
 
@@ -23,6 +23,9 @@ const Example = () => {
           <input type="text" onChange={(e) => changeAction(e.target.value)} value={action} />
           <button type="button" onClick={clickVerify}>
             Verify
+          </button>
+          <button type="button" onClick={clickReset}>
+            Reset
           </button>
           <hr />
           {token && <p style={{ fontSize: 'small' }}>{token}</p>}

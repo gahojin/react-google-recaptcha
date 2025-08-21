@@ -1,120 +1,102 @@
-import { type Context, createContext, type JSX, useCallback, useEffect, useMemo, useState } from 'react'
+import { type Context, createContext, type JSX, useCallback, useEffect, useId, useMemo, useState } from 'react'
 import type { GoogleReCaptchaContextType, GoogleReCaptchaProviderProps, Grecaptcha } from './types'
+import { injectScriptTag, removeScriptTag } from './utils.ts'
 
-const GoogleReCaptchaContext: Context<GoogleReCaptchaContextType | undefined> = createContext<GoogleReCaptchaContextType | undefined>(undefined)
+const GoogleReCaptchaContext: Context<GoogleReCaptchaContextType> = createContext<GoogleReCaptchaContextType>({
+  isLoading: true,
+  error: null,
+  execute: () => Promise.reject('useGoogleRecaptcha must be used within an GoogleReCaptchaProvider'),
+  reset: () => [],
+})
 
 type State = {
   isLoading: boolean
-  error?: string | null
+  error?: Error | null
+  widgetId: string
   grecaptcha?: Grecaptcha | null
 }
 
-const GoogleReCaptchaProvider = ({ siteKey, language, script, children }: GoogleReCaptchaProviderProps): JSX.Element => {
-  const [state, setState] = useState<State>({ isLoading: true })
+const GoogleReCaptchaProvider = ({
+  siteKey,
+  language,
+  useRecaptchaNet,
+  useEnterprise,
+  container,
+  badge,
+  theme,
+  children,
+}: GoogleReCaptchaProviderProps): JSX.Element => {
+  const id = useId()
+  const containerId = useMemo(() => (container ? container : `${id}-container`), [id, container])
+  const [state, setState] = useState<State>({ isLoading: true, widgetId: siteKey })
 
-  // loaded script
+  // ReCaptcha初期化
   const onLoad = useCallback(() => {
-    if (!window || !(window as any).grecaptcha) {
+    const grecaptcha = window.grecaptcha?.enterprise ?? window.grecaptcha
+    if (!grecaptcha) {
       setState({
         isLoading: false,
-        error: 'ReCaptcha is not available',
+        widgetId: siteKey,
+        error: new Error('ReCaptcha is not available'),
       })
       return
     }
-    const tmp = (window as any).grecaptcha
-    tmp.ready(() => {
+    grecaptcha.ready(() => {
+      const widgetId = grecaptcha.render(containerId, {
+        sitekey: siteKey,
+        badge,
+        theme,
+        size: 'invisible',
+      })
       setState({
-        grecaptcha: tmp,
+        widgetId,
+        grecaptcha,
         error: null,
         isLoading: false,
       })
     })
-  }, [])
+  }, [siteKey, containerId, badge, theme])
 
   const execute = useCallback(
     async (action?: string) => {
       const grecaptcha = state?.grecaptcha
       if (grecaptcha?.execute) {
-        return await grecaptcha.execute(siteKey, { action })
+        return await grecaptcha.execute(state.widgetId, action ? { action } : undefined)
       }
-      throw new Error('aaaReCaptcha is not available')
+      throw new Error('ReCaptcha is not available')
     },
-    [siteKey, state.grecaptcha],
+    [state],
   )
 
-  useEffect(() => {
-    if (!isScriptInjected(siteKey)) {
-      injectScriptTag(siteKey, language, script?.async ?? true, script?.defer ?? true, script?.nonce, script?.trustedtypes ?? false, onLoad)
-    }
+  const reset = useCallback(() => {
+    state?.grecaptcha?.reset(state.widgetId)
+  }, [state])
 
+  // scriptタグを追加/削除する
+  useEffect(() => {
+    const removeScript = injectScriptTag(id, language, useRecaptchaNet, useEnterprise, onLoad)
     return () => {
-      removeScriptTag(siteKey)
+      removeScript?.remove()
+      removeScriptTag()
     }
-  }, [onLoad, siteKey, language, script])
+  }, [id, language, useRecaptchaNet, useEnterprise, onLoad])
 
   const value: GoogleReCaptchaContextType = useMemo(
     () => ({
       isLoading: state.isLoading,
-      error: state.error,
+      error: state.error ?? null,
       execute,
+      reset,
     }),
-    [state, execute],
+    [state, execute, reset],
   )
 
-  return <GoogleReCaptchaContext.Provider value={value}>{children}</GoogleReCaptchaContext.Provider>
-}
-
-const isScriptInjected = (siteKey: string) => {
-  return !!document.getElementById(siteKey)
-}
-
-const injectScriptTag = (
-  siteKey: string,
-  language: string | undefined,
-  async: boolean,
-  defer: boolean,
-  nonce: string | undefined,
-  trustedtypes: boolean,
-  onLoad: () => void,
-) => {
-  const script = document.createElement('script')
-  script.id = siteKey
-  script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}${language ? '&hl=${language}' : ''}${trustedtypes ? '&trustedtypes=true' : ''}`
-  script.async = async
-  script.defer = defer
-  if (nonce) {
-    script.nonce = nonce
-  }
-  script.type = 'text/javascript'
-  script.onload = onLoad
-
-  const head = document.getElementsByTagName('head')[0]
-  head.appendChild(script)
-}
-
-const removeScriptTag = (siteKey: string) => {
-  if (!document) {
-    return
-  }
-
-  removeRecaptchBadge()
-
-  let script = document.getElementById(siteKey)
-  if (script) {
-    script.remove()
-  }
-
-  script = document.querySelector('script[src^="https://www.gstatic.com/recaptcha/releases"]')
-  if (script) {
-    script.remove()
-  }
-}
-
-const removeRecaptchBadge = () => {
-  const nodeBadge = document.querySelector('.grecaptcha-badge')
-  if (nodeBadge && nodeBadge.parentNode) {
-    document.body.removeChild(nodeBadge.parentNode)
-  }
+  return (
+    <GoogleReCaptchaContext.Provider value={value}>
+      {children}
+      {container ? null : <div id={`${id}-container`} />}
+    </GoogleReCaptchaContext.Provider>
+  )
 }
 
 export { GoogleReCaptchaProvider, GoogleReCaptchaContext }
