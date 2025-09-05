@@ -13,6 +13,8 @@ export type Parameters = {
   badge?: Badge
   size?: Size
   theme?: Theme
+  callback?: (token: string) => void
+  'error-callback'?: (error?: Error) => void
 }
 
 export type GoogleReCaptchaProviderProps = PropsWithChildren<{
@@ -32,7 +34,7 @@ export type Action = {
 export type Grecaptcha = {
   ready: (onReady: () => void) => void
   render: (container: string | HTMLElement, params: Parameters) => string
-  execute: (widgetId: string, params?: Action) => Promise<string>
+  execute: (widgetId: string, params?: Action) => Promise<string | null>
   reset: (widgetId: string) => void
 }
 
