@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![NPM Version](https://img.shields.io/npm/v/%40gahojin-inc%2Freact-google-recaptcha?activeTab=versions)](https://www.npmjs.com/package/@gahojin-inc/react-google-recaptcha)
 
-Google ReCaptcha V3をReact Hooksとして提供するライブラリ
+Google ReCaptcha V2/V3をReact Hooksとして提供するライブラリ
 
 ## 使い方
 

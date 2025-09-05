@@ -10,8 +10,10 @@ const Example = () => {
     setAction(text)
   }, [])
 
-  const clickVerify = useCallback(async () => {
-    setToken(await execute(action))
+  const clickVerify = useCallback(() => {
+    execute(action)
+      .then((token) => setToken(token))
+      .catch((error) => setToken(`error: ${error}`))
   }, [action, execute])
 
   return (

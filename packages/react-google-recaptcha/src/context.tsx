@@ -1,4 +1,4 @@
-import { type Context, createContext, type JSX, useCallback, useEffect, useId, useMemo, useState } from 'react'
+import { type Context, createContext, type JSX, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import type { GoogleReCaptchaContextType, GoogleReCaptchaProviderProps, Grecaptcha } from './types'
 import { injectScriptTag, removeScriptTag } from './utils.ts'
 
@@ -29,6 +29,24 @@ const GoogleReCaptchaProvider = ({
   const id = useId()
   const containerId = useMemo(() => (container ? container : `${id}-container`), [id, container])
   const [state, setState] = useState<State>({ isLoading: true, widgetId: siteKey })
+  const successHandler = useRef<(token: string) => void>(null)
+  const errorHandler = useRef<(error: Error | undefined) => void>(null)
+
+  const handleSuccess = useCallback((token: string) => {
+    if (successHandler.current) {
+      successHandler.current?.(token)
+      successHandler.current = null
+      errorHandler.current = null
+    }
+  }, [])
+
+  const handleError = useCallback((error: Error | undefined) => {
+    if (errorHandler.current) {
+      errorHandler.current?.(error)
+      successHandler.current = null
+      errorHandler.current = null
+    }
+  }, [])
 
   // ReCaptcha初期化
   const onLoad = useCallback(() => {
@@ -47,6 +65,8 @@ const GoogleReCaptchaProvider = ({
         badge,
         theme,
         size: 'invisible',
+        callback: (token) => handleSuccess(token),
+        'error-callback': (error) => handleError(error),
       })
       setState({
         widgetId,
@@ -55,17 +75,27 @@ const GoogleReCaptchaProvider = ({
         isLoading: false,
       })
     })
-  }, [siteKey, containerId, badge, theme])
+  }, [siteKey, containerId, badge, theme, handleSuccess, handleError])
 
   const execute = useCallback(
-    async (action?: string) => {
+    (action?: string) => {
       const grecaptcha = state?.grecaptcha
       if (grecaptcha?.execute) {
-        return await grecaptcha.execute(state.widgetId, action ? { action } : undefined)
+        const promise = new Promise<string>((resolve, reject) => {
+          successHandler.current = resolve
+          errorHandler.current = reject
+        })
+        return grecaptcha.execute(state.widgetId, action ? { action } : undefined).then((token) => {
+          if (token) {
+            handleSuccess(token)
+          }
+          // token = nullの場合、v2動作
+          return promise
+        })
       }
-      throw new Error('ReCaptcha is not available')
+      return Promise.reject('ReCaptcha is not available')
     },
-    [state],
+    [state, handleSuccess],
   )
 
   const reset = useCallback(() => {

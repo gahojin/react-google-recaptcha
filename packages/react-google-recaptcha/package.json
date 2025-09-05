@@ -17,6 +17,8 @@
   ],
   "keywords": [
     "google-recaptcha",
+    "google-recaptcha-v2",
+    "google-recaptcha-v3",
     "react"
   ],
   "publishConfig": {
