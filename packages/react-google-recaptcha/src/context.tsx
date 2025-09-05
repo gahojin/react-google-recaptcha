@@ -12,8 +12,6 @@ const GoogleReCaptchaContext: Context<GoogleReCaptchaContextType> = createContex
 type State = {
   isLoading: boolean
   error?: Error | null
-  widgetId: string
-  grecaptcha?: Grecaptcha | null
 }
 
 const GoogleReCaptchaProvider = ({
@@ -28,13 +26,19 @@ const GoogleReCaptchaProvider = ({
 }: GoogleReCaptchaProviderProps): JSX.Element => {
   const id = useId()
   const containerId = useMemo(() => (container ? container : `${id}-container`), [id, container])
-  const [state, setState] = useState<State>({ isLoading: true, widgetId: siteKey })
+  const [state, setState] = useState<State>({ isLoading: true })
+
+  const widgetId = useRef<string>(siteKey)
+  const grecaptcha = useRef<Grecaptcha>(null)
+  const scriptLoaded = useRef(false)
   const successHandler = useRef<(token: string) => void>(null)
   const errorHandler = useRef<(error: Error | undefined) => void>(null)
 
   const handleSuccess = useCallback((token: string) => {
     if (successHandler.current) {
       successHandler.current?.(token)
+      // トークンを再度取得できるよう、リセットする
+      grecaptcha.current?.reset(widgetId.current)
       successHandler.current = null
       errorHandler.current = null
     }
@@ -50,42 +54,51 @@ const GoogleReCaptchaProvider = ({
 
   // ReCaptcha初期化
   const onLoad = useCallback(() => {
-    const grecaptcha = window.grecaptcha?.enterprise ?? window.grecaptcha
-    if (!grecaptcha) {
+    const instance = window.grecaptcha?.enterprise ?? window.grecaptcha
+    if (!instance) {
       setState({
         isLoading: false,
-        widgetId: siteKey,
-        error: new Error('ReCaptcha is not available'),
+        error: new Error('reCaptcha is not available'),
       })
       return
     }
-    grecaptcha.ready(() => {
-      const widgetId = grecaptcha.render(containerId, {
+
+    // 二重にrender実行されることを抑止
+    if (scriptLoaded.current) {
+      return
+    }
+    scriptLoaded.current = true
+
+    instance.ready(() => {
+      widgetId.current = instance.render(containerId, {
         sitekey: siteKey,
         badge,
         theme,
         size: 'invisible',
-        callback: (token) => handleSuccess(token),
-        'error-callback': (error) => handleError(error),
+        callback: handleSuccess,
+        'error-callback': handleError,
       })
+      grecaptcha.current = instance
       setState({
-        widgetId,
-        grecaptcha,
         error: null,
         isLoading: false,
       })
     })
   }, [siteKey, containerId, badge, theme, handleSuccess, handleError])
 
+  const reset = useCallback(() => {
+    grecaptcha.current?.reset(widgetId.current)
+  }, [])
+
   const execute = useCallback(
     (action?: string) => {
-      const grecaptcha = state?.grecaptcha
-      if (grecaptcha?.execute) {
+      const instance = grecaptcha.current
+      if (instance?.execute) {
         const promise = new Promise<string>((resolve, reject) => {
           successHandler.current = resolve
           errorHandler.current = reject
         })
-        return grecaptcha.execute(state.widgetId, action ? { action } : undefined).then((token) => {
+        return instance.execute(widgetId.current, action ? { action } : undefined).then((token) => {
           if (token) {
             handleSuccess(token)
           }
@@ -95,19 +108,16 @@ const GoogleReCaptchaProvider = ({
       }
       return Promise.reject('ReCaptcha is not available')
     },
-    [state, handleSuccess],
+    [handleSuccess],
   )
-
-  const reset = useCallback(() => {
-    state?.grecaptcha?.reset(state.widgetId)
-  }, [state])
 
   // scriptタグを追加/削除する
   useEffect(() => {
     const removeScript = injectScriptTag(id, language, useRecaptchaNet, useEnterprise, onLoad)
     return () => {
-      removeScript?.remove()
+      removeScript()
       removeScriptTag()
+      scriptLoaded.current = false
     }
   }, [id, language, useRecaptchaNet, useEnterprise, onLoad])
 

@@ -16,7 +16,7 @@ export const injectScriptTag = (
   useRecaptchaNet: boolean | undefined,
   useEnterprise: boolean | undefined,
   onLoad: () => void,
-): HTMLScriptElement => {
+): (() => void) => {
   const script = document.createElement('script')
   script.type = 'text/javascript'
   script.id = scriptId
@@ -25,9 +25,10 @@ export const injectScriptTag = (
   script.defer = true
   script.onload = onLoad
 
-  const head = document.getElementsByTagName('head')[0]
-  head.appendChild(script)
-  return script
+  document.head.appendChild(script)
+  return () => {
+    document.head.removeChild(script)
+  }
 }
 
 export const removeScriptTag = (): void => {

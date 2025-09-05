@@ -1,19 +1,22 @@
 import { useGoogleRecaptcha } from '@gahojin-inc/react-google-recaptcha'
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useTransition } from 'react'
 
 const Example = () => {
   const { isLoading, execute, reset: clickReset } = useGoogleRecaptcha()
   const [token, setToken] = useState<string>()
   const [action, setAction] = useState<string>()
+  const [isTransition, setTransition] = useTransition()
 
   const changeAction = useCallback((text: string) => {
     setAction(text)
   }, [])
 
   const clickVerify = useCallback(() => {
-    execute(action)
-      .then((token) => setToken(token))
-      .catch((error) => setToken(`error: ${error}`))
+    setTransition(() => {
+      return execute(action)
+        .then((token) => setToken(token))
+        .catch((error) => setToken(`error: ${error}`))
+    })
   }, [action, execute])
 
   return (
@@ -30,7 +33,7 @@ const Example = () => {
             Reset
           </button>
           <hr />
-          {token && <p style={{ fontSize: 'small' }}>{token}</p>}
+          {isTransition ? 'loading...' : token && <p style={{ fontSize: 'small' }}>{token}</p>}
         </>
       )}
     </div>
