@@ -98,7 +98,7 @@ const GoogleReCaptchaProvider = ({
           successHandler.current = resolve
           errorHandler.current = reject
         })
-        return instance.execute(widgetId.current, action ? { action } : undefined).then((token) => {
+        return Promise.resolve(instance.execute(widgetId.current, action ? { action } : undefined)).then((token) => {
           if (token) {
             handleSuccess(token)
           }
