@@ -34,7 +34,7 @@ export type Action = {
 export type Grecaptcha = {
   ready: (onReady: () => void) => void
   render: (container: string | HTMLElement, params: Parameters) => string
-  execute: (widgetId: string, params?: Action) => Promise<string | null>
+  execute: (widgetId: string, params?: Action) => PromiseLike<string | null>
   reset: (widgetId: string) => void
 }
 
