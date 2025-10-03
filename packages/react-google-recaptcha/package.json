@@ -1,6 +1,6 @@
 {
   "name": "@gahojin-inc/react-google-recaptcha",
-  "version": "2025.9.1",
+  "version": "2025.10.0",
   "description": "Hooks for Google ReCaptcha V3",
   "author": "GAHOJIN, Inc.",
   "license": "Apache-2.0",
