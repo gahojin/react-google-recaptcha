@@ -7,7 +7,6 @@
     "url": "https://github.com/gahojin/react-google-recaptcha.git"
   },
   "scripts": {
-    "preinstall": "pnpm dlx only-allow pnpm",
     "build": "turbo run build --filter=!./examples/* --filter=!*props-docs",
     "lint": "turbo run lint",
     "check": "turbo run check",
