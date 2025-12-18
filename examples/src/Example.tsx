@@ -25,11 +25,11 @@ const Example = () => {
         'loading...'
       ) : (
         <>
-          <input type="text" onChange={(e) => changeAction(e.target.value)} value={action} />
-          <button type="button" onClick={clickVerify}>
+          <input type="text" onChange={(e) => changeAction(e.target.value)} value={action} data-testid="token" />
+          <button type="button" onClick={clickVerify} data-testid="button-verify">
             Verify
           </button>
-          <button type="button" onClick={clickReset}>
+          <button type="button" onClick={clickReset} data-testid="button-reset">
             Reset
           </button>
           <hr />

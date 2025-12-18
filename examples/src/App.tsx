@@ -18,7 +18,7 @@ const App = () => {
         {enable ? 'Disable' : 'Enable'}
       </button>
       {enable && (
-        <GoogleReCaptchaProvider siteKey={siteKey} language="ja" container={containerId} badge="bottomleft" theme="dark">
+        <GoogleReCaptchaProvider siteKey={siteKey} language="ja" container={containerId} badge="bottomleft" theme="dark" data-testid="provider">
           <div id={containerId} style={{ visibility: 'hidden' }} />
           <span>
             このサイトは reCAPTCHA によって保護されており、Google の<a href="https://policies.google.com/privacy">プライバシーポリシー</a>と
