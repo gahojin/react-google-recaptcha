@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@biomejs/biome": "2.3.8",
+    "@biomejs/biome": "2.3.9",
     "@commitlint/cli": "20.2.0",
     "@commitlint/config-conventional": "20.2.0",
     "@commitlint/types": "20.2.0",
@@ -37,7 +37,7 @@
     "terser": "5.44.1",
     "turbo": "2.6.3",
     "typescript": "5.9.3",
-    "unplugin-isolated-decl": "0.15.6",
+    "unplugin-isolated-decl": "0.15.7",
     "vite": "7.3.0",
     "vite-tsconfig-paths": "6.0.1",
     "vitest": "4.0.15"
