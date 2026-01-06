@@ -16,9 +16,9 @@
     "react-dom": "19.2.0"
   },
   "devDependencies": {
-    "@vitest/browser-playwright": "4.0.15",
-    "vite": "7.1.11",
-    "vitest": "4.0.15",
+    "@vitest/browser-playwright": "4.0.16",
+    "vite": "7.3.0",
+    "vitest": "4.0.16",
     "vitest-browser-react": "2.0.2"
   }
 }
