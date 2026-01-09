@@ -13,7 +13,7 @@
   "dependencies": {
     "@gahojin-inc/react-google-recaptcha": "link:../packages/react-google-recaptcha",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@vitest/browser-playwright": "4.0.16",
