@@ -11,10 +11,7 @@ updates:
     cooldown:
       default-days: 7
   - package-ecosystem: "npm"
-    directories:
-      - "/"
-      - "/examples"
-      - "/packages/react-google-recaptcha"
+    directory: "/"
     groups:
       all:
         patterns:
