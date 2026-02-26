@@ -15,11 +15,11 @@
     "check:packagejson": "turbo run check:packagejson",
     "test": "turbo run test:unit --filter=!./examples/* --filter=!*props-docs",
     "clean": "turbo run clean --filter=!./examples/* --filter=!*props-docs",
-    "ncu": "npm-check-updates --workspaces -u"
+    "ncu": "mise run ncu"
   },
   "dependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@biomejs/biome": "2.4.2",
+    "@biomejs/biome": "2.4.4",
     "@fast-check/vitest": "0.2.4",
     "@types/node": "25.2.3",
     "@types/react": "19.2.14",
@@ -27,7 +27,6 @@
     "@vitejs/plugin-react": "5.1.4",
     "@vitest/coverage-v8": "4.0.18",
     "jest-extended": "7.0.0",
-    "npm-check-updates": "19.3.2",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "rolldown": "1.0.0-rc.4",
