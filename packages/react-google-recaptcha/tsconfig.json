@@ -4,7 +4,6 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "baseUrl": ".",
     "outDir": "dist",
     "lib": ["ES2022", "DOM"],
     "types": ["@types/node", "vitest/globals", "vite/client", "jest-extended"]
