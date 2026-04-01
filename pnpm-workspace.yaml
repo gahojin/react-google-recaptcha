@@ -5,10 +5,11 @@ packages:
 ignoredBuiltDependencies:
   - esbuild
 
-onlyBuiltDependencies:
-  - lefthook
-
 overrides:
   '@vitest/expect': $vitest
   '@vitest/mocker': $vitest
   '@vitest/spy': $vitest
+
+# リリースから一定時間経過していないか、信頼性低下したパッケージはインストールしない
+minimumReleaseAge: 2880
+trustPolicy: no-downgrade
