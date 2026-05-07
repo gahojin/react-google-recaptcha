@@ -5,6 +5,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "outDir": "dist",
+    "rootDir": "src",
     "lib": ["ES2022", "DOM"],
     "types": ["@types/node", "vitest/globals", "vite/client", "jest-extended"]
   },

@@ -1,7 +1,7 @@
 import { type JSX, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
-import { GoogleReCaptchaContext } from './context.tsx'
-import type { GoogleReCaptchaContextType, GoogleReCaptchaProviderProps, Grecaptcha } from './types.ts'
-import { injectScriptTag, removeScriptTag } from './utils.ts'
+import { GoogleReCaptchaContext } from './context.js'
+import type { GoogleReCaptchaContextType, GoogleReCaptchaProviderProps, Grecaptcha } from './types.js'
+import { injectScriptTag, removeScriptTag } from './utils.js'
 
 type State = {
   isLoading: boolean
