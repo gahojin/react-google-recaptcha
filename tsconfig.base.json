@@ -1,14 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ES2022",
-    "moduleResolution": "bundler",
+    "target": "es2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "lib": ["ES2022"],
-    "allowImportingTsExtensions": true,
     "declaration": true,
     "sourceMap": true,
-    "esModuleInterop": true,
     "isolatedDeclarations": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,

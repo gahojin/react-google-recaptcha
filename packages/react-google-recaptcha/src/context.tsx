@@ -1,5 +1,5 @@
 import { type Context, createContext } from 'react'
-import type { GoogleReCaptchaContextType } from './types'
+import type { GoogleReCaptchaContextType } from './types.js'
 
 const GoogleReCaptchaContext: Context<GoogleReCaptchaContextType> = createContext<GoogleReCaptchaContextType>({
   isLoading: true,

@@ -1,6 +1,6 @@
 import { type JSX, useId } from 'react'
-import { GoogleReCaptchaContext } from './context.tsx'
-import type { GoogleReCaptchaProviderProps } from './types.ts'
+import { GoogleReCaptchaContext } from './context.js'
+import type { GoogleReCaptchaProviderProps } from './types.js'
 
 const MOCK_TOKEN: string = 'mock-JspVRfSqeamw4CKN3kc7nL_p_MTzWSeE'
 
