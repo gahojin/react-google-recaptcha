@@ -2,6 +2,9 @@ packages:
   - examples
   - packages/**
 
+# 重複排除
+dedupePeers: true
+
 overrides:
   '@vitest/expect': $vitest
   '@vitest/mocker': $vitest
