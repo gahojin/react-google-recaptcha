@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@gahojin-inc/react-google-recaptcha": "link:../packages/react-google-recaptcha",
-    "react": "19.2.5",
-    "react-dom": "19.2.5"
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
   },
   "devDependencies": {
     "@vitest/browser-playwright": "4.1.5",
