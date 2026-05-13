@@ -2,9 +2,6 @@ packages:
   - examples
   - packages/**
 
-ignoredBuiltDependencies:
-  - esbuild
-
 overrides:
   '@vitest/expect': $vitest
   '@vitest/mocker': $vitest
@@ -13,3 +10,6 @@ overrides:
 # リリースから一定時間経過していないか、信頼性低下したパッケージはインストールしない
 minimumReleaseAge: 2880
 trustPolicy: no-downgrade
+
+# 特殊なソースからの依存関係をインストールしない
+blockExoticSubdeps: true
