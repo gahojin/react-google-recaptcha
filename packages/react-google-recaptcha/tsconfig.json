@@ -7,7 +7,7 @@
     "outDir": "dist",
     "rootDir": "src",
     "lib": ["ES2022", "DOM"],
-    "types": ["@types/node", "vitest/globals", "vite/client", "jest-extended"]
+    "types": ["@types/node", "vitest/globals", "vite/client"]
   },
   "include": ["src"],
   "exclude": ["dist", "node_modules"]
