@@ -9,6 +9,8 @@ overrides:
   '@vitest/expect': $vitest
   '@vitest/mocker': $vitest
   '@vitest/spy': $vitest
+  # @arethetypeswrong/cli がfflateの上流バグのため、動作しないためバージョン固定
+  fflate: '0.8.2'
 
 # リリースから一定時間経過していないか、信頼性低下したパッケージはインストールしない
 minimumReleaseAge: 2880
