@@ -5,10 +5,31 @@ packages:
 # 重複排除
 dedupePeers: true
 
+catalog:
+  react: &react_ver 19.2.7
+  react-dom: *react_ver
+  turbo: 2.9.18
+  typescript: 6.0.3
+  unplugin-dts: 1.0.3
+  vite: 8.1.0
+  vitest: &vitest_ver 4.1.9
+  vitest-browser-react: 2.2.0
+  '@biomejs/biome': 2.5.1
+  '@fast-check/vitest': 0.4.1
+  '@types/node': 25.9.4
+  '@types/react': 19.2.17
+  '@types/react-dom': 19.2.3
+  '@vitejs/plugin-react': 6.0.3
+  '@vitest/coverage-v8': *vitest_ver
+  '@vitest/browser-playwright': *vitest_ver
+  '@vitest/expect': *vitest_ver
+  '@vitest/mocker': *vitest_ver
+  '@vitest/spy': *vitest_ver
+
 overrides:
-  '@vitest/expect': $vitest
-  '@vitest/mocker': $vitest
-  '@vitest/spy': $vitest
+  '@vitest/expect': 'catalog:'
+  '@vitest/mocker': 'catalog:'
+  '@vitest/spy': 'catalog:'
 
 # リリースから一定時間経過していないか、信頼性低下したパッケージはインストールしない
 minimumReleaseAge: 2880 # 2d
