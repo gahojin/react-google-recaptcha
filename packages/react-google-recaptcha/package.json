@@ -32,11 +32,12 @@
     "./package.json": "./package.json",
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "development": "./dist/index.development.js",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
-    "build": "vite build",
+    "build": "rolldown -c",
     "prepublishOnly": "pnpm run build",
     "lint": "biome check --write .",
     "lint:ci": "biome ci .",
@@ -47,8 +48,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "react": "19.2.7",
-    "react-dom": "19.2.7"
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
