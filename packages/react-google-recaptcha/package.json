@@ -32,7 +32,8 @@
     "./package.json": "./package.json",
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "development": "./dist/index.development.js",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {

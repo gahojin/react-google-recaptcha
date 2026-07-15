@@ -6,7 +6,7 @@
     "jsxImportSource": "react",
     "outDir": "dist",
     "rootDir": "src",
-    "types": ["@types/node", "vitest/globals", "vite/client"]
+    "types": ["@types/node", "vitest/globals"]
   },
   "include": ["src"],
   "exclude": ["dist", "node_modules"]
