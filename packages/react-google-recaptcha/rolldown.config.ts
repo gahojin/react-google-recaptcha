@@ -11,7 +11,7 @@ export default defineConfig([
       cleanDir: true,
     },
     external: [/^node:/, /^@types\//, /^react\//, 'react', 'react-dom', /^rolldown\//],
-    input: 'src/index.js',
+    input: 'src/index.ts',
     platform: 'neutral',
     transform: {
       define: {
