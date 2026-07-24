@@ -15,7 +15,7 @@ export default defineConfig([
     platform: 'neutral',
     transform: {
       define: {
-        'process.env.NODE_ENV': "'development'",
+        'process.env.NODE_ENV': "'test'",
       },
     },
   },
