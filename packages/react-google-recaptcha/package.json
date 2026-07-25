@@ -32,7 +32,7 @@
     "./package.json": "./package.json",
     ".": {
       "types": "./dist/index.d.ts",
-      "development": "./dist/index.development.js",
+      "test": "./dist/index.test.js",
       "default": "./dist/index.js"
     }
   },
