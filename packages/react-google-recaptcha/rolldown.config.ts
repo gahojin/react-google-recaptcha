@@ -7,7 +7,7 @@ export default defineConfig([
     plugins: [],
     output: {
       ...baseConfig.output,
-      entryFileNames: '[name].development.js',
+      entryFileNames: '[name].test.js',
       cleanDir: true,
     },
     external: [/^node:/, /^@types\//, /^react\//, 'react', 'react-dom', /^rolldown\//],
