@@ -12,8 +12,7 @@
     "directory": "packages/react-google-recaptcha"
   },
   "files": [
-    "dist",
-    "!dist/**/*.test.*"
+    "dist"
   ],
   "keywords": [
     "google-recaptcha",
