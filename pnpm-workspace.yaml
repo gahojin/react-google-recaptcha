@@ -29,6 +29,8 @@ catalog:
   '@vitest/spy': *vitest_ver
 
 overrides:
+  # CVE-2026-67213
+  nanoid: ^3.3.17
   rolldown: 'catalog:'
   '@vitest/expect': 'catalog:'
   '@vitest/mocker': 'catalog:'
