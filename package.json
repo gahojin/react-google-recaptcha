@@ -24,11 +24,12 @@
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "@vitest/coverage-v8": "catalog:",
+    "playwright": "catalog:",
     "rolldown": "catalog:",
     "rolldown-plugin-dts": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
-  "packageManager": "pnpm@11.17.0"
+  "packageManager": "pnpm@11.20.0"
 }
