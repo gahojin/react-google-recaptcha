@@ -9,30 +9,30 @@ catalog:
   react: &react_ver 19.3.0
   react-dom: *react_ver
   playwright: 1.64.1
-  rolldown: 1.2.14
+  rolldown: 1.2.15
   rolldown-plugin-dts: 0.28.8
-  turbo: 2.11.8
+  turbo: 2.11.10
   typescript: 7.0.2
-  vite: 8.3.4
+  vite: 8.3.5
   vitest: &vitest_ver 5.0.3
   vitest-browser-react: 2.3.0
-  '@biomejs/biome': 2.5.15
-  '@fast-check/vitest': 0.5.0
-  '@types/node': 26.6.5
-  '@types/react': 19.3.0
-  '@types/react-dom': 19.3.0
-  '@vitejs/plugin-react': 6.1.2
-  '@vitest/coverage-v8': *vitest_ver
-  '@vitest/browser-playwright': *vitest_ver
-  '@vitest/expect': *vitest_ver
-  '@vitest/mocker': *vitest_ver
-  '@vitest/spy': *vitest_ver
+  "@biomejs/biome": 2.6.3
+  "@fast-check/vitest": 0.5.0
+  "@types/node": 26.6.6
+  "@types/react": 19.3.0
+  "@types/react-dom": 19.3.0
+  "@vitejs/plugin-react": 6.1.2
+  "@vitest/coverage-v8": *vitest_ver
+  "@vitest/browser-playwright": *vitest_ver
+  "@vitest/expect": *vitest_ver
+  "@vitest/mocker": *vitest_ver
+  "@vitest/spy": *vitest_ver
 
 overrides:
-  rolldown: 'catalog:'
-  '@vitest/expect': 'catalog:'
-  '@vitest/mocker': 'catalog:'
-  '@vitest/spy': 'catalog:'
+  rolldown: "catalog:"
+  "@vitest/expect": "catalog:"
+  "@vitest/mocker": "catalog:"
+  "@vitest/spy": "catalog:"
 
 # リリースから一定時間経過していないか、信頼性低下したパッケージはインストールしない
 minimumReleaseAge: 2880 # 2d
